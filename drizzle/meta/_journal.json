@@ -8,6 +8,13 @@
       "when": 1719051124746,
       "tag": "0000_wise_maximus",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1721166500451,
+      "tag": "0001_parallel_whiplash",
+      "breakpoints": true
     }
   ]
 }
