@@ -15,6 +15,13 @@
       "when": 1721166500451,
       "tag": "0001_parallel_whiplash",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1721341488362,
+      "tag": "0002_charming_argent",
+      "breakpoints": true
     }
   ]
 }
