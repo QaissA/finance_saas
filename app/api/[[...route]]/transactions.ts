@@ -12,6 +12,7 @@ import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
 import { parse, subDays } from "date-fns";
+import { error } from "console";
 
 const app = new Hono()
   .get(
@@ -31,9 +32,6 @@ const app = new Hono()
 
       if (!auth?.userId) {
         return c.json({ error: "Unauthorized" }, 401);
-        // throw new HTTPException(401, {
-        //   res: c.json({ error: "Unauthorize" }, 401),
-        // });
       }
 
       const defaultTo = new Date();
@@ -42,8 +40,8 @@ const app = new Hono()
       const startDate = from
         ? parse(from, "yyyy-MM-dd", new Date())
         : defaultFrom;
-
       const endDate = to ? parse(to, "yyyy-MM-dd", new Date()) : defaultTo;
+
       const data = await db
         .select({
           id: transactions.id,
@@ -61,11 +59,10 @@ const app = new Hono()
         .leftJoin(categories, eq(transactions.categoryId, categories.id))
         .where(
           and(
-            //this filter helps us get only transactions related to the user that is auth
             accountId ? eq(transactions.accountId, accountId) : undefined,
             eq(accounts.userId, auth.userId),
             gte(transactions.date, startDate),
-            lte(transactions.date, startDate)
+            lte(transactions.date, endDate)
           )
         )
         .orderBy(desc(transactions.date));
@@ -138,6 +135,38 @@ const app = new Hono()
           id: createId(),
           ...values,
         })
+        .returning();
+
+      return c.json({ data });
+    }
+  )
+  .post(
+    "/bulk-create",
+    clerkMiddleware(),
+    zValidator(
+      "json",
+      z.array(
+        insertTransactionsSchema.omit({
+          id: true,
+        })
+      )
+    ),
+    async (c) => {
+      const auth = getAuth(c);
+      const values = c.req.valid("json");
+
+      if (auth?.userId) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      const data = await db
+        .insert(transactions)
+        .values(
+          values.map((value) => ({
+            id: createId(),
+            ...value,
+          }))
+        )
         .returning();
 
       return c.json({ data });
