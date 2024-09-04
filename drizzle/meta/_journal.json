@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1719051124746,
-      "tag": "0000_wise_maximus",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1721166500451,
-      "tag": "0001_parallel_whiplash",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1721341488362,
-      "tag": "0002_charming_argent",
+      "when": 1724150996384,
+      "tag": "0000_plain_speed_demon",
       "breakpoints": true
     }
   ]

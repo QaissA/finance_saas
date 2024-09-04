@@ -10,9 +10,50 @@ import { useNewTransaction } from "@/features/transactions/hooks/use-new-transac
 import { useBulkDeleteTransactions } from "@/features/transactions/api/use-bulk-delete-transaction";
 import { useBulkCreateTransactions } from "@/features/transactions/api/use-bulk-create-transaction";
 import { useGetTransactions } from "@/features/transactions/api/use-get-transactions";
+import { useState } from "react";
 
+import { transactions as transactionSchema } from "@/db/schema";
+import { toast } from "sonner";
+import { useSelectAccount } from "@/features/accounts/hooks/use-select-account";
+import ImportCard from "./import-card";
+import UploadButton from "./upload-button";
+
+enum VARIANTS {
+    LIST = "LIST",
+    IMPORT = "IMPORT"
+}
+
+const INITIAL_IMPORT_RESULT = {
+    data: [],
+    errors: [],
+    meta: {}
+}
 
 const TransactionsPage = () => {
+    const [AccountDialog, confirm] = useSelectAccount();
+
+    const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
+    const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULT);
+
+
+    const onUpload = (result: typeof INITIAL_IMPORT_RESULT) => {
+        setImportResults(result);
+        setVariant(VARIANTS.IMPORT);
+    }
+
+    const onCancel = () => {
+        setImportResults(INITIAL_IMPORT_RESULT);
+        setVariant(VARIANTS.LIST);
+    }
+
+    const onSubmitImport = async (values: typeof transactionSchema.$inferInsert[]) => {
+        const accountId = await confirm();
+
+        if (!accountId) {
+            return toast.error("Please select an account to continue");
+        }
+    }
+
     const newTransaction = useNewTransaction();
     const createTransactions = useBulkCreateTransactions();
     const deleteTransactions = useBulkDeleteTransactions();
@@ -38,6 +79,15 @@ const TransactionsPage = () => {
         )
     }
 
+    if (variant === VARIANTS.IMPORT) {
+        return (
+            <>
+                <AccountDialog />
+                <ImportCard data={importResults.data} onCancel={onCancel} onSubmit={onSubmitImport} />
+            </>
+        )
+    }
+
     return (
         <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
             <Card className="border-none drop-shadow-sm">
@@ -54,6 +104,7 @@ const TransactionsPage = () => {
                             <Plus className="size-4 mr-2" />
                             Add new
                         </Button>
+                        <UploadButton onUpload={onUpload} />
                     </div>
                 </CardHeader>
                 <CardContent>

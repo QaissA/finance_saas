@@ -7,6 +7,7 @@ type props = {
 
 const layout = ({ children }: props) => {
     return (
+        
         <>
             <Header />
             <main className='px-3 lg:px-14'>

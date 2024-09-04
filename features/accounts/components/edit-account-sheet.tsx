@@ -35,8 +35,6 @@ export const EditAccountSheet = () => {
     const editMutation = useEditAccount(id);
     const deleteMutation = useDeleteAccount(id);
 
-    console.log(accountQuery);
-
     const isPending = editMutation.isPending || deleteMutation.isPending;
     const isLoading = accountQuery.isLoading;
 

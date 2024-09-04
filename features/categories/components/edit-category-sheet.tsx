@@ -35,8 +35,6 @@ export const EditCategorySheet = () => {
     const editMutation = useEditCategory(id);
     const deleteMutation = useDeleteCategory(id);
 
-    console.log(categoryQuery);
-
     const isPending = editMutation.isPending || deleteMutation.isPending;
     const isLoading = categoryQuery.isLoading;
 

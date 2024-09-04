@@ -12,7 +12,6 @@ import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
 import { z } from "zod";
 import { parse, subDays } from "date-fns";
-import { error } from "console";
 
 const app = new Hono()
   .get(

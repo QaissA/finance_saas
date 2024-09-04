@@ -12,6 +12,8 @@ import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/utils";
 import { space } from "postcss/lib/list";
+import CategoryColumn from "./category-column";
+import AccountColumn from "./account-column";
 
 export type ResposneType = InferResponseType<typeof client.api.transactions.$get, 200>["data"][0];
 
@@ -79,7 +81,11 @@ export const columns: ColumnDef<ResposneType>[] = [
             const date = row.getValue("date") as Date;
 
             return (
-                <span>category column</span>
+                <CategoryColumn
+                    id={row.original.id}
+                    category={row.original.category}
+                    categoryId={row.original.categoryId}
+                />
             )
         }
     },
@@ -138,7 +144,10 @@ export const columns: ColumnDef<ResposneType>[] = [
         },
         cell: ({ row }) => {
             return (
-                <span>colu;n for account</span>
+                <AccountColumn
+                    account={row.original.account}
+                    accountId={row.original.accountId}
+                />
             )
         }
     },
