@@ -88,13 +88,10 @@ const main = async () => {
     await db.delete(categories).execute();
     // Seed categories
     await db.insert(categories).values(SEED_CATEGORIES).execute();
-    console.log(categories, SEED_CATEGORIES);
     // Seed accounts
     await db.insert(accounts).values(SEED_ACCOUNTS).execute();
-    console.log(accounts, SEED_ACCOUNTS);
     // Seed transactions
     await db.insert(transactions).values(SEED_TRANSACTIONS).execute();
-    console.log(transactions, SEED_TRANSACTIONS);
   } catch (error) {
     console.error("Error during seed:", error);
     process.exit(1);

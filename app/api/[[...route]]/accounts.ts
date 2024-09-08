@@ -24,7 +24,6 @@ const app = new Hono()
       })
       .from(accounts)
       .where(eq(accounts.userId, auth.userId));
-    console.log("accounts backend", data);
     return c.json({ data });
   })
   .get(
