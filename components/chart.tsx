@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Select, SelectGroup, SelectLabel } from "./ui/select";
-import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "@radix-ui/react-select";
+import { Select, SelectGroup, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { AreaChart, BarChart3, FileSearch, LineChart, Loader2 } from "lucide-react";
 import { Skeleton } from "./ui/skeleton";
 import AreaVariant from "./area-variant";
 import LineVariant from "./line-variant";
 import BarVariant from "./bar-variant";
 import { FaChartSimple } from "react-icons/fa6";
+
 
 type Props = {
     data?: {
@@ -32,6 +32,7 @@ export const Chart = ({
                 <CardTitle className="text-xl line-clamp-1">
                     Transactions
                 </CardTitle>
+                <Select />
                 <Select
                     defaultValue={chartType}
                     onValueChange={onTypeChange}

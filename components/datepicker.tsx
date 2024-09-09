@@ -1,4 +1,5 @@
-import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
+// import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { SelectSingleEventHandler } from 'react-day-picker';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
@@ -38,7 +39,6 @@ const Datepicker = ({
                     selected={value}
                     onSelect={onChange}
                     disabled={disabled}
-                    initialFocus
                 />
             </PopoverContent>
         </Popover>
