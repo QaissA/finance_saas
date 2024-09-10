@@ -90,7 +90,7 @@ export const Chart = ({
     )
 }
 
-export const chartLoading = () => {
+export const ChartLoading = () => {
     return (
         <Card className="border-none drop-shadow-sm">
             <CardHeader className="flex space-y-2 lg:space-y-0 lg:flex-row lg:items-center justify-between">
